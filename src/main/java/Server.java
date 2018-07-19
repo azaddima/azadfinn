@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -9,35 +8,38 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Observer;
-import java.util.Scanner;
 
 public class Server extends Observable implements Runnable {
 	
 	InetAddress ip;
 	int port;
-	boolean connection = true;
+	boolean threadIsRunning = true;
 	ServerSocket serverSocket;
 	Socket socket;
 	OutputStream outputStream;
 	ObjectOutputStream write;
-	Timer timer;
-	ArrayList<MyFormTemplate> forms;
+	ArrayList<MyFormTemplate> paintAreaForms;
 
-	public Server() {}
+
+	public Server(ArrayList<MyFormTemplate> paintAreaForms) {
+		this.paintAreaForms = paintAreaForms;
+	}
 
 	@Override
 	public void run() {
-		startServer(port, forms);
+		startServer();
+		while(threadIsRunning) {
+
+			try {
+				sendData();
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
-	public void startServer(int port, ArrayList forms) {
-
-		this.port = port;
-		//this.forms = forms;
-
-		String message;
-		String versendeteMsg;
+	public void startServer() {
 
 		try {
 
@@ -48,28 +50,6 @@ public class Server extends Observable implements Runnable {
 
 			outputStream = socket.getOutputStream();
 			write = new ObjectOutputStream(outputStream);
-			timer = new Timer(10, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					try {
-					//	write.writeObject(forms);
-						write.flush();
-					} catch (IOException ex) {
-						ex.printStackTrace();
-					}
-				}
-			});
-
-
-			while(connection == true) {
-
-				timer.start();
-
-			}
-			timer.stop();
-			socket.close();
-			serverSocket.close();
-			write.close();
 
 		}
 
@@ -84,6 +64,25 @@ public class Server extends Observable implements Runnable {
 		}
 	}
 
+	public void stopServer() {
+
+		try {
+			if(socket != null) {
+				socket.close();
+			}
+			if(write != null) {
+				write.close();
+			}
+			serverSocket.close();
+
+			threadIsRunning = false;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	//Get IP address for IP address Label in Server Panel
 	public void getIpAddress() {
 		try {
 			ip = InetAddress.getLocalHost();
@@ -96,5 +95,21 @@ public class Server extends Observable implements Runnable {
 
 	}
 
+	public void sendData() {
 
+		try {
+			write.writeObject(paintAreaForms);
+			write.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setThreadIsRunning(boolean threadIsRunning) {
+		this.threadIsRunning = threadIsRunning;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
 }

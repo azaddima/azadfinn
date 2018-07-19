@@ -32,10 +32,10 @@ public class GuiForm extends JFrame implements Observer {
     private JPanel dimensionCenter;
     private JPanel networkPanel;
     private JTextField serverPortTextField;
-    private JButton serverButton;
+    private JButton serverStartButton;
     private JTextField clientPortTextField;
     private JTextField clientIpAddressTextField;
-    private JButton clientButton;
+    private JButton clientStartButton;
     private JSlider slider1;
     private JSpinner spinner1;
     private JSpinner spinner2;
@@ -50,6 +50,8 @@ public class GuiForm extends JFrame implements Observer {
     private JLabel clientPortLabel;
     private JLabel clientIpAddressLabel;
     private JPanel clientButtonPanel;
+    private JButton serverStopButton;
+    private JButton clientStopButton;
 
     //Canvas
     private PaintArea paintArea = new PaintArea();
@@ -326,8 +328,8 @@ public class GuiForm extends JFrame implements Observer {
         return serverPortTextField;
     }
 
-    public JButton getServerButton() {
-        return serverButton;
+    public JButton getServerStartButton() {
+        return serverStartButton;
     }
 
     public void setServerIpLabel(JLabel serverIpLabel) {
@@ -342,8 +344,8 @@ public class GuiForm extends JFrame implements Observer {
         return clientIpAddressTextField;
     }
 
-    public JButton getClientButton() {
-        return clientButton;
+    public JButton getClientStartButton() {
+        return clientStartButton;
     }
 
     public JSlider getSlider1() {
@@ -370,4 +372,11 @@ public class GuiForm extends JFrame implements Observer {
         this.spinner2 = spinner2;
     }
 
+    public JButton getServerStopButton() {
+        return serverStopButton;
+    }
+
+    public JButton getClientStopButton() {
+        return clientStopButton;
+    }
 }
