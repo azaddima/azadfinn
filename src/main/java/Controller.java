@@ -194,7 +194,6 @@ public class Controller {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 
-				//
 				activeForm.setX((Integer)view.getxSpinner().getValue()); // Jspinner value need to be casted to an Integer
 				paintArea.repaint();
 			}
@@ -208,10 +207,38 @@ public class Controller {
 			}
 		});
 
+		//Dimensions ------
+		// Rectangle
 
-			
-    	
-		
+		view.getSpinner2().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+
+				if (activeForm instanceof MyRectangle) {
+					((MyRectangle) activeForm).setWidth((Integer) view.getSpinner2().getValue());
+					System.out.println(((MyRectangle) activeForm).getWidth() + " ");
+
+					paintArea.repaint();
+				}
+			}
+		});
+
+		// TODO: 19.07.2018 fix height changer
+		view.getSpinner1().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+
+				if (activeForm instanceof MyRectangle) {
+
+					((MyRectangle) activeForm).setHeight((Integer) view.getSpinner1().getValue());
+					System.out.println(((MyRectangle) activeForm).getHeight() + ": Height ");
+
+					paintArea.repaint();
+				}
+			}
+		});
+
+
 		// -------
 		// BOTTOM TAB
 		// -------
@@ -339,8 +366,8 @@ public class Controller {
     	
 //    	view.getPaintArea().repaint();
 
-       
-        
+
+
 //        Timer timer = new Timer(10, new ActionListener() {
 //        	
 //        	public void actionPerformed(ActionEvent e) {
