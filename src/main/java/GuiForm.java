@@ -29,6 +29,12 @@ public class GuiForm extends JFrame implements Observer {
     private JPanel positionCenter;
     private JPanel dimensionPanel;
     private JPanel dimensionCenter;
+    private JPanel networkPanel;
+    private JTextField textField1;
+    private JButton button1;
+    private JTextField textField2;
+    private JTextField textField3;
+    private JButton button2;
 
     //Canvas
     private PaintArea paintArea = new PaintArea();

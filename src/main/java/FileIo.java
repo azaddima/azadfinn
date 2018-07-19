@@ -1,4 +1,8 @@
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class FileIo {
@@ -9,47 +13,60 @@ public class FileIo {
 
 	public void saveData(PaintArea paintArea) {
 		this.paintArea = paintArea;
-		try {
-			File file = new File("Data.txt");
-			FileOutputStream fos = new FileOutputStream(file, false);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
+		JFileChooser fileChooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt","txt", "text");
+		fileChooser.setFileFilter(filter);
+		if (JFileChooser.APPROVE_OPTION == fileChooser.showSaveDialog(null)) {
+			File file = fileChooser.getSelectedFile();
+			try {
+				FileOutputStream fos = new FileOutputStream(file, false);
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-			//If Bedingung kann man vorher setzen
-			if(paintArea.getForms().size() != 0) {
-				System.out.println("Wird gesepeichert");
-				oos.writeObject(paintArea.getForms());
-				oos.flush();
+				//If Bedingung kann man vorher setzen
+				if (paintArea.getForms().size() != 0) {
+					System.out.println("Wird gesepeichert");
+					oos.writeObject(paintArea.getForms());
+					oos.flush();
+				}
+
+				fos.close();
+				oos.close();
+				System.out.println("Es wurde irgendwo was gespeichert.");
+
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
 			}
-
-			fos.close();
-			oos.close();
-			System.out.println("Es wurde irgendwo was gespeichert.");
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
 		}
 	}
 
 	public void openData() {
 
-		try {
-
-			//create ObjectOutputStream for the file we created
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Data.txt"));
-
-			//read array in data.txt
-			ArrayList<MyRectangle> formsFile = (ArrayList<MyRectangle>) ois.readObject();
-
-			//set Forms Array in paintArea
-			paintArea.setForms(formsFile);
-
-			ois.close();
 
 
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+		JFileChooser fc = new JFileChooser();
+		if(JFileChooser.APPROVE_OPTION == fc.showOpenDialog(null)) {
+			File file = fc.getSelectedFile();
+
+
+			try {
+
+				//create ObjectOutputStream for the file we created
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+
+				//read array in data.txt
+				ArrayList<MyRectangle> formsFile = (ArrayList<MyRectangle>) ois.readObject();
+
+				//set Forms Array in paintArea
+				paintArea.setForms(formsFile);
+
+				ois.close();
+
+
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
 		}
 	}
 }
