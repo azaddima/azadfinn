@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class PaintArea extends JPanel implements Observer, Serializable{
 	
 	//My List of shapes. Will be changed later to hold any <Object>
-	private ArrayList<MyRectangle> forms = new ArrayList<MyRectangle>();
+	private ArrayList<MyFormTemplate> forms = new ArrayList<MyFormTemplate>();
 	
 	//Determines what to add to canvas.
 	//Could work with booleans here, but will work with this for now.
@@ -23,9 +23,16 @@ public class PaintArea extends JPanel implements Observer, Serializable{
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
-        for(MyRectangle rectangle: forms) {
-        	rectangle.draw(g); //repaint() in draw method
+
+        for(MyFormTemplate form: forms) {
+
+        	//Draw Rectangle
+        	if(form instanceof MyRectangle){
+				((MyRectangle)form).draw(g); //repaint() in draw method
+			}
+
+			// TODO: 19.07.2018 Draw circle
+
         }
 	}
 	
@@ -33,7 +40,7 @@ public class PaintArea extends JPanel implements Observer, Serializable{
 		forms.add(new MyRectangle(x,y, 50,50));
 	}
 	
-	public MyRectangle getActiveRect() {
+	public MyFormTemplate getActiveRect() {
 		if(activeLayer != -1) {
 			return forms.get(activeLayer);
 		}
@@ -67,37 +74,46 @@ public class PaintArea extends JPanel implements Observer, Serializable{
 
 		int highestLayer = -1;
 
-		for(MyRectangle form: forms) {
-			
-			if(form.clickedInside(x, y)) {
-				int layer = forms.indexOf(form);
-				System.out.println("Layer of clicked Object: " + layer);
+		for(MyFormTemplate form: forms) {
 
-				if(layer > highestLayer){
-					highestLayer = layer;
+			// If form is a rectangle
+			if(form instanceof MyRectangle){
+
+				if(((MyRectangle)form).clickedInside(x, y)) {
+					int layer = forms.indexOf(form);
+					System.out.println("Layer of clicked Object: " + layer);
+
+					if(layer > highestLayer){
+						highestLayer = layer;
+					}
 				}
-				setActiveLayer(layer);
-				
 			}
+
+
+			// TODO: 19.07.2018 Is circle pressed?
+
+
 		}
+
+		setActiveLayer(highestLayer);
 		
 		System.out.println("Highest Layer: " + highestLayer);
 	}
 	
-	public ArrayList<MyRectangle> getForms() {
+	public ArrayList<MyFormTemplate> getForms() {
 		return forms;
 	}
 
-	public MyRectangle returnLast() {
+	public MyFormTemplate returnLast() {
 
-		MyRectangle rectangle = forms.get(forms.size() -1);
+		MyFormTemplate form = forms.get(forms.size() -1);
 		System.out.println("RETURN LAST OBJECT");
 
-		return rectangle;
+		return form;
 	}
 
 
-	public void setForms(ArrayList<MyRectangle> forms) {
+	public void setForms(ArrayList<MyFormTemplate> forms) {
 		this.forms = forms;
 	}
 	
@@ -108,12 +124,10 @@ public class PaintArea extends JPanel implements Observer, Serializable{
 
 
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+
 		
 		
 	}
 
-	
 
-	
 }

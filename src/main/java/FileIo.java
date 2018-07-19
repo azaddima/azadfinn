@@ -55,7 +55,7 @@ public class FileIo {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 
 				//read array in data.txt
-				ArrayList<MyRectangle> formsFile = (ArrayList<MyRectangle>) ois.readObject();
+				ArrayList<MyFormTemplate> formsFile = (ArrayList<MyFormTemplate>) ois.readObject();
 
 				//set Forms Array in paintArea
 				paintArea.setForms(formsFile);

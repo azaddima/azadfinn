@@ -420,10 +420,10 @@ public class Controller {
     	 	
     	if(paintArea.getForms().size() != 0) {
     		
-    		ArrayList<MyRectangle> rects = paintArea.getForms();
-    		
-        	for(MyRectangle rect: rects) {
-        		rect.getObserver().addObserver(view);
+    		ArrayList<MyFormTemplate> forms = paintArea.getForms();
+
+        	for(MyFormTemplate form: forms) {
+        		form.getObserver().addObserver(view);
         	}
     	}
     	

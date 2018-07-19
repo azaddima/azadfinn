@@ -145,6 +145,11 @@ public class GuiForm extends JFrame implements Observer {
 
             xSpinner.setValue(((MyRectangle) o).getX());
             ySpinner.setValue(((MyRectangle) o).getY());
+
+            // Width, Height, and Sizefactor
+            spinner2.setValue(((MyRectangle) o).getWidth());
+            spinner1.setValue(((MyRectangle) o).getHeight());
+
         }
     }
 
@@ -340,4 +345,29 @@ public class GuiForm extends JFrame implements Observer {
     public JButton getClientButton() {
         return clientButton;
     }
+
+    public JSlider getSlider1() {
+        return slider1;
+    }
+
+    public void setSlider1(JSlider slider1) {
+        this.slider1 = slider1;
+    }
+
+    public JSpinner getSpinner1() {
+        return spinner1;
+    }
+
+    public void setSpinner1(JSpinner spinner1) {
+        this.spinner1 = spinner1;
+    }
+
+    public JSpinner getSpinner2() {
+        return spinner2;
+    }
+
+    public void setSpinner2(JSpinner spinner2) {
+        this.spinner2 = spinner2;
+    }
+
 }
