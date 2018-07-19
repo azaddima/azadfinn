@@ -121,12 +121,19 @@ public class GuiForm extends JFrame implements Observer {
             colorSliderGreen.setValue(green);
             colorSliderBlue.setValue(blue);
 
+            // Color Data
             textField.setText(red + "");
             textField_1.setText(green + "");
             textField_2.setText(blue + "");
 
+            // X / Y coordinates
             xSpinner.setValue(((MyRectangle) o).getX());
             ySpinner.setValue(((MyRectangle) o).getY());
+
+            // Width, Height, and Sizefactor
+            spinner1.setValue(((MyRectangle) o).getWidth());
+            spinner2.setValue(((MyRectangle) o).getHeight());
+
         }
     }
 
@@ -297,5 +304,29 @@ public class GuiForm extends JFrame implements Observer {
 
     public void setySpinner(JSpinner ySpinner) {
         this.ySpinner = ySpinner;
+    }
+
+    public JSlider getSlider1() {
+        return slider1;
+    }
+
+    public void setSlider1(JSlider slider1) {
+        this.slider1 = slider1;
+    }
+
+    public JSpinner getSpinner1() {
+        return spinner1;
+    }
+
+    public void setSpinner1(JSpinner spinner1) {
+        this.spinner1 = spinner1;
+    }
+
+    public JSpinner getSpinner2() {
+        return spinner2;
+    }
+
+    public void setSpinner2(JSpinner spinner2) {
+        this.spinner2 = spinner2;
     }
 }

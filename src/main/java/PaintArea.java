@@ -14,7 +14,9 @@ public class PaintArea extends JPanel implements Observer, Serializable{
 	
 	//Determines what to add to canvas.
 	//Could work with booleans here, but will work with this for now.
-	private int paintState = 0; // 1[Rectangle], 2[Circle]
+	private int paintState = 0; // 1[Rectangle], 2[Circle] -- ONLY FOR DRAWING
+
+
 	private int activeLayer = -1;
 	
 

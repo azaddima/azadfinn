@@ -24,7 +24,6 @@ public class MyRectangle extends MyFormTemplate implements Serializable {
 	}
 
 
-
 	public boolean clickedInside(int mouseX, int mouseY) {
 		
 		int xPos = getX();
@@ -47,14 +46,22 @@ public class MyRectangle extends MyFormTemplate implements Serializable {
 		super.getObserver().notifyObservers();
 	}
 
-	public void resizeWidth(int width){
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
 		this.width = width;
 	}
 
-	public void resizeHeight(int height){
-
-	}
-	
 	void draw(Graphics g) {
 		
 		g.setColor(getC());
