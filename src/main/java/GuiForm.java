@@ -340,4 +340,12 @@ public class GuiForm extends JFrame implements Observer {
     public JButton getClientButton() {
         return clientButton;
     }
+
+    public JSpinner getSpinner1() {
+        return spinner1;
+    }
+
+    public JSpinner getSpinner2() {
+        return spinner2;
+    }
 }
