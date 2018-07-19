@@ -26,9 +26,11 @@ public class Controller {
 
 	private FileIo fileIo = new FileIo();
 
-	private Server server = new Server();
+	private Server server;
 
-	private Client client = new Client();
+	private Client client = new Client(paintArea);
+
+	Thread thread;
 
 	    
     public Controller(){
@@ -44,6 +46,9 @@ public class Controller {
 
     	paintArea.addCircle(300,300);
 
+
+    	server = new Server(paintArea.getForms());
+
     	//connect observer and observable at startup
     	connectObservers();
 
@@ -54,19 +59,54 @@ public class Controller {
 		server.getIpAddress();
 
 		//start Server
-		view.getServerButton().addActionListener(new ActionListener() {
+
+		view.getServerStartButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				server.startServer((Integer.parseInt(view.getServerPortTextField().getText())), paintArea.getForms());
+				server.setPort(Integer.parseInt(view.getServerPortTextField().getText()));
+				//server.startServer(Integer.parseInt(view.getServerPortTextField().getText()));
+				thread = new Thread(server);
+				thread.start();
+				view.getServerStartButton().setEnabled(false);
+				view.getServerStopButton().setEnabled(true);
+			}
+		});
+
+		//Stop Server
+
+		view.getServerStopButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				server.stopServer();
+				server.setThreadIsRunning(false);
+				view.getServerStopButton().setEnabled(false);
+				view.getServerStartButton().setEnabled(true);
+
+
 			}
 		});
 
 		//start Client
-		view.getClientButton().addActionListener(new ActionListener() {
+		view.getClientStartButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				client.connectToServer(Integer.parseInt(view.getClientPortTextField().getText()),
-						view.getClientIpAddressTextField().getText());
+				client.setPort(Integer.parseInt(view.getClientPortTextField().getText()));
+				client.setHost(view.getClientIpAddressTextField().getText());
+				client.start();
+				view.getClientStartButton().setEnabled(false);
+				view.getClientStopButton().setEnabled(true);
+
+			}
+		});
+
+		//stop Client
+		view.getClientStopButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				client.stopConnection();
+				client.setThreadIsRunning(false);
+				view.getClientStopButton().setEnabled(false);
+				view.getClientStartButton().setEnabled(true);
 			}
 		});
     	
@@ -290,7 +330,7 @@ public class Controller {
 		});
 
 
-    	
+
     	view.getStopPntBtn().addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -298,7 +338,7 @@ public class Controller {
 				//Disable PaintStopButton
 				view.getStopPntBtn().setEnabled(false);
 
-				
+
 				//PaintState reset to 0. 
 				System.out.println("PaintState resetet: " + paintArea.getPaintState());
 				paintArea.resetPaintState();
