@@ -55,7 +55,7 @@ public class Controller {
 		view.getServerButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				server.startServer((Integer.parseInt(view.getServerPortTextField().getText())));
+				server.startServer((Integer.parseInt(view.getServerPortTextField().getText())), paintArea.getForms());
 			}
 		});
 

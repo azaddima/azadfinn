@@ -22,7 +22,7 @@ public class Server extends Observable implements Runnable {
 	OutputStream outputStream;
 	ObjectOutputStream write;
 	Timer timer;
-	ArrayList<MyFormTemplate> forms = new ArrayList<>();
+	ArrayList<MyFormTemplate> forms;
 
 	public Server() {}
 
@@ -34,7 +34,7 @@ public class Server extends Observable implements Runnable {
 	public void startServer(int port, ArrayList forms) {
 
 		this.port = port;
-		this.forms = forms;
+		//this.forms = forms;
 
 		String message;
 		String versendeteMsg;
@@ -52,7 +52,7 @@ public class Server extends Observable implements Runnable {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					try {
-						write.writeObject(forms);
+					//	write.writeObject(forms);
 						write.flush();
 					} catch (IOException ex) {
 						ex.printStackTrace();
