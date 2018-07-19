@@ -35,6 +35,9 @@ public class GuiForm extends JFrame implements Observer {
     private JTextField textField2;
     private JTextField textField3;
     private JButton button2;
+    private JSlider slider1;
+    private JSpinner spinner1;
+    private JSpinner spinner2;
 
     //Canvas
     private PaintArea paintArea = new PaintArea();
