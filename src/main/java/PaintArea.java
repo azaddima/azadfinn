@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,7 +30,12 @@ public class PaintArea extends JPanel implements Observer, Serializable{
 				((MyRectangle)form).draw(g); //repaint() in draw method
 			}
 
-			// TODO: 19.07.2018 Draw circle
+			//Draw Circle
+			if(form instanceof MyCircle){
+        		//MyCircle handles drawing of shape
+				((MyCircle) form).redrawEllipse();
+        		((MyCircle) form).draw(g);
+			}
 
         }
 	}
@@ -39,8 +43,12 @@ public class PaintArea extends JPanel implements Observer, Serializable{
 	public void addRect(int x, int y) {
 		forms.add(new MyRectangle(x,y, 50,50));
 	}
-	
-	public MyFormTemplate getActiveRect() {
+
+	public void addCircle(int x, int y){
+		forms.add(new MyCircle(x,y, 50,50));
+	}
+
+	public MyFormTemplate getActiveForm() {
 		if(activeLayer != -1) {
 			return forms.get(activeLayer);
 		}
@@ -63,6 +71,8 @@ public class PaintArea extends JPanel implements Observer, Serializable{
 	
 	public void setActiveLayer(int activeLayer) {
 		this.activeLayer = activeLayer;
+
+		System.out.println(activeLayer + ":ActiveLayer");
 	}
 	
 	public int getActiveLayer() {
@@ -91,6 +101,16 @@ public class PaintArea extends JPanel implements Observer, Serializable{
 
 
 			// TODO: 19.07.2018 Is circle pressed?
+			if(form instanceof MyCircle){
+				if(((MyCircle) form).getEllipse2D().contains(x,y)){
+					int layer = forms.indexOf(form);
+					System.out.println("Layer of clicked Circle: " + layer);
+
+					if(layer > highestLayer){
+						highestLayer = layer;
+					}
+				}
+			}
 
 
 		}

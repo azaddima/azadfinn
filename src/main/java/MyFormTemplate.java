@@ -11,6 +11,8 @@ public class MyFormTemplate implements Serializable{
 	
 	private int x;
 	private int y;
+	private int width;
+	private int height;
 	private Color c;
 	
 	private int r = 0;

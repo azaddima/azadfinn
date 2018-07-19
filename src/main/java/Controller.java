@@ -41,7 +41,9 @@ public class Controller {
     	//add rects
     	paintArea.addRect(100, 100);
     	paintArea.addRect(250, 100);
-    	
+
+    	paintArea.addCircle(300,300);
+
     	//connect observer and observable at startup
     	connectObservers();
 
@@ -207,6 +209,7 @@ public class Controller {
 			}
 		});
 
+
 		//Dimensions ------
 		// Rectangle
 
@@ -220,18 +223,39 @@ public class Controller {
 
 					paintArea.repaint();
 				}
+
+				// change circle width
+
+				if(activeForm instanceof MyCircle){
+					((MyCircle)activeForm).setWidth((Integer)view.getSpinner2().getValue());
+
+					System.out.println(((MyCircle) activeForm).getWidth() + ": Height ");
+
+
+					paintArea.repaint();
+				}
 			}
 		});
 
-		// TODO: 19.07.2018 fix height changer
+
 		view.getSpinner1().addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 
+				//change height rectangle
 				if (activeForm instanceof MyRectangle) {
 
 					((MyRectangle) activeForm).setHeight((Integer) view.getSpinner1().getValue());
 					System.out.println(((MyRectangle) activeForm).getHeight() + ": Height ");
+
+					paintArea.repaint();
+				}
+
+				if(activeForm instanceof MyCircle){
+
+					((MyCircle)activeForm).setHeight((Integer)view.getSpinner1().getValue());
+					System.out.println(((MyCircle) activeForm).getHeight() + ": Height ");
+
 
 					paintArea.repaint();
 				}
@@ -253,6 +277,19 @@ public class Controller {
 				paintArea.setPaintState(1);
 			}
 		});
+
+
+    	view.getCircleBtn().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				view.getStopPntBtn().setEnabled(true);
+
+				paintArea.setPaintState(2);
+				System.out.println("PaintState changed to 2");
+			}
+		});
+
+
     	
     	view.getStopPntBtn().addActionListener(new ActionListener() {
 			
@@ -260,6 +297,7 @@ public class Controller {
 		
 				//Disable PaintStopButton
 				view.getStopPntBtn().setEnabled(false);
+
 				
 				//PaintState reset to 0. 
 				System.out.println("PaintState resetet: " + paintArea.getPaintState());
@@ -283,17 +321,24 @@ public class Controller {
 				paintArea.objectsInPos(e.getX(), e.getY());
 
 				//sets active FORM - for editing
-				activeForm = paintArea.getActiveRect();
+				activeForm = paintArea.getActiveForm();
+
+
 
                 // Updates "Work Space" when active activeForm is changed
 				view.updateWorkSpace(activeForm);
 
-				//---
+
+
+
+
+
 				//PAINT STATE 1
 				//---
 				//ADD RECTANGLE
+
 				int dimensions = 25; // starting size for rectangles
-				System.out.println("PaintState: " + paintArea.getPaintState());
+
 				if(paintArea.getPaintState() == 1) {
 
 					paintArea.addRect(e.getX() - dimensions, e.getY() - dimensions);
@@ -302,6 +347,20 @@ public class Controller {
 					// Connect created Object with Observer
 					addLastObserver();
 				}
+
+				//PAINT STATE 2
+				//---
+				//Add Circle
+
+				if(paintArea.getPaintState() == 2){
+
+					paintArea.addCircle(e.getX(), e.getY());
+					paintArea.repaint();
+
+					//Connect created Object with observer
+					addLastObserver();
+				}
+
 			}
 
 

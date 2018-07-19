@@ -50,6 +50,7 @@ public class GuiForm extends JFrame implements Observer {
     private JLabel clientPortLabel;
     private JLabel clientIpAddressLabel;
     private JPanel clientButtonPanel;
+    private JButton circleBtn;
 
     //Canvas
     private PaintArea paintArea = new PaintArea();
@@ -149,6 +150,28 @@ public class GuiForm extends JFrame implements Observer {
             // Width, Height, and Sizefactor
             spinner2.setValue(((MyRectangle) o).getWidth());
             spinner1.setValue(((MyRectangle) o).getHeight());
+
+        }
+
+        if(o instanceof MyCircle){
+            int red = ((MyCircle) o).getR();
+            int green = ((MyCircle) o).getG();
+            int blue = ((MyCircle) o).getB();
+
+            colorSliderRed.setValue(red);
+            colorSliderGreen.setValue(green);
+            colorSliderBlue.setValue(blue);
+
+            textField.setText(red + "");
+            textField_1.setText(green + "");
+            textField_2.setText(blue + "");
+
+            xSpinner.setValue(((MyCircle) o).getX());
+            ySpinner.setValue(((MyCircle) o).getY());
+
+            // Width, Height, and Sizefactor
+            spinner2.setValue(((MyCircle) o).getWidth());
+            spinner1.setValue(((MyCircle) o).getHeight());
 
         }
     }
@@ -370,4 +393,11 @@ public class GuiForm extends JFrame implements Observer {
         this.spinner2 = spinner2;
     }
 
+    public JButton getCircleBtn() {
+        return circleBtn;
+    }
+
+    public void setCircleBtn(JButton circleBtn) {
+        this.circleBtn = circleBtn;
+    }
 }
