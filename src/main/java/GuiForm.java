@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.net.InetAddress;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -30,14 +31,25 @@ public class GuiForm extends JFrame implements Observer {
     private JPanel dimensionPanel;
     private JPanel dimensionCenter;
     private JPanel networkPanel;
-    private JTextField textField1;
-    private JButton button1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JButton button2;
+    private JTextField serverPortTextField;
+    private JButton serverButton;
+    private JTextField clientPortTextField;
+    private JTextField clientIpAddressTextField;
+    private JButton clientButton;
     private JSlider slider1;
     private JSpinner spinner1;
     private JSpinner spinner2;
+    private JPanel serverPanel;
+    private JLabel serverLabel;
+    private JLabel portLabel;
+    private JLabel serverIpAddressLabel;
+    private JLabel serverIpLabel;
+    private JPanel serverButtonPanel;
+    private JPanel clientPanel;
+    private JLabel clientLabel;
+    private JLabel clientPortLabel;
+    private JLabel clientIpAddressLabel;
+    private JPanel clientButtonPanel;
 
     //Canvas
     private PaintArea paintArea = new PaintArea();
@@ -108,6 +120,12 @@ public class GuiForm extends JFrame implements Observer {
             textField_2.setText(((Color) arg).getBlue() + "");
 
         }
+
+        if(arg instanceof InetAddress) {
+            System.out.println("hellou");
+            serverIpLabel.setText(((((InetAddress) arg).getHostAddress())+ ""));
+        }
+
 
     }
 
@@ -297,5 +315,29 @@ public class GuiForm extends JFrame implements Observer {
 
     public void setySpinner(JSpinner ySpinner) {
         this.ySpinner = ySpinner;
+    }
+
+    public JTextField getServerPortTextField() {
+        return serverPortTextField;
+    }
+
+    public JButton getServerButton() {
+        return serverButton;
+    }
+
+    public void setServerIpLabel(JLabel serverIpLabel) {
+        this.serverIpLabel = serverIpLabel;
+    }
+
+    public JTextField getClientPortTextField() {
+        return clientPortTextField;
+    }
+
+    public JTextField getClientIpAddressTextField() {
+        return clientIpAddressTextField;
+    }
+
+    public JButton getClientButton() {
+        return clientButton;
     }
 }

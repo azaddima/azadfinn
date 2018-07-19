@@ -26,6 +26,10 @@ public class Controller {
 
 	private FileIo fileIo = new FileIo();
 
+	private Server server = new Server();
+
+	private Client client = new Client();
+
 	    
     public Controller(){
     	
@@ -40,7 +44,29 @@ public class Controller {
     	
     	//connect observer and observable at startup
     	connectObservers();
-    	
+
+    	//Add View as observer to Server
+    	server.addObserver(view);
+
+    	//set IP address
+		server.getIpAddress();
+
+		//start Server
+		view.getServerButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				server.startServer((Integer.parseInt(view.getServerPortTextField().getText())));
+			}
+		});
+
+		//start Client
+		view.getClientButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				client.connectToServer(Integer.parseInt(view.getClientPortTextField().getText()),
+						view.getClientIpAddressTextField().getText());
+			}
+		});
     	
     	view.getColorSliderRed().addChangeListener(new ChangeListener() {
 			
