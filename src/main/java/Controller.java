@@ -472,7 +472,7 @@ public class Controller {
 
 
                 // Workspace update when active activeForm(Layer) is changed
-                if(!client.clientStarted()) {
+                if(!client.IsClientStarted()) {
                     if (paintArea.getActiveLayer() == -1) {
                         view.disableWorkSpace();
                         view.getDeleteBtn().setEnabled(false);
