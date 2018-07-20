@@ -146,6 +146,7 @@ public class Controller {
 						client.setHost(host);
 						client.start();
 						view.disableForClient();
+						client.clientStarted(true);
 					}
 				}
 				catch (Exception ec) {
@@ -161,6 +162,7 @@ public class Controller {
 				client.stopConnection();
 				client.setThreadIsRunning(false);
 				view.enableForClient();
+				client.clientStarted(false);
 			}
 		});
     	
