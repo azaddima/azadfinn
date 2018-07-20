@@ -470,14 +470,17 @@ public class Controller {
 
 
                 // Workspace update when active activeForm(Layer) is changed
-				if(paintArea.getActiveLayer() == -1) {
-					view.disableWorkSpace();
-					view.getDeleteBtn().setEnabled(false);
-				} else {
-					view.enableWorkSpace();
-					view.getDeleteBtn().setEnabled(true);
-				}
-				view.updateWorkSpace(activeForm);
+                if(!client.clientStarted()) {
+                    if (paintArea.getActiveLayer() == -1) {
+                        view.disableWorkSpace();
+                        view.getDeleteBtn().setEnabled(false);
+                    } else {
+                        view.enableWorkSpace();
+                        view.getDeleteBtn().setEnabled(true);
+                    }
+
+                    view.updateWorkSpace(activeForm);
+                }
 
 
 				//PAINT STATE 1
@@ -569,53 +572,7 @@ public class Controller {
 				paintArea.repaint();
 			}
 		});
-    	
-//    	view.getPaintArea().repaint();
 
-
-
-//        Timer timer = new Timer(10, new ActionListener() {
-//        	
-//        	public void actionPerformed(ActionEvent e) {
-//
-//        		
-//                rect.x += 5; // alle 10 ms
-//
-//                rect.y = (int) ((view.getBounds().height / 4) * Math.sin(rect.x * 0.005f)) + (view.getBounds().height / 2) -150;
-//
-//                if(rect.x > view.getBounds().width){
-//                    rect.x = -230;
-//                }
-//
-//                //change color ------------------
-//                Color c = view.getPaintArea().getC();
-//                int r = c.getRed();
-//                int g = c.getGreen();
-//                int b = c.getBlue();
-//
-//                r++;
-//                g+= 10;
-//                b+= 5;
-//
-//                r %= 255;
-//                g %= 255;
-//                b %= 255;
-//
-//                c = new Color(r,g,b);
-//                view.getPaintArea().setC(c);
-//
-//
-//                view.getPaintArea().repaint();
-//
-////                for (int i = 0; i < 10; i++) {
-////
-////                }
-//                
-//            }
-//        });
-
-//        timer.start();
-        
     }
 
 	public void addLastObserver() {

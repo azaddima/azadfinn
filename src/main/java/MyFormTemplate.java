@@ -46,8 +46,6 @@ public class MyFormTemplate implements Serializable{
 	private int gSpeed;
 	private int bSpeed;
 
-
-
 	public MyFormTemplate(int x, int y, Color c) {
 		this.x = x;
 		this.y = y;
@@ -60,7 +58,7 @@ public class MyFormTemplate implements Serializable{
 	}
 	
 	public MyFormTemplate(int x, int y) {
-		this(x,y, new Color(0,0,0));
+		this(x,y, new Color(155, 140, 242));
 	}
 
 	public void setSize(int size){
