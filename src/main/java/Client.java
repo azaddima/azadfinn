@@ -114,7 +114,11 @@ public class Client extends Thread {
 		this.host = host;
 	}
 
-	public void clientStarted(boolean clientStarted) {
+	public boolean IsClientStarted() {
+		return clientIsRunning;
+	}
+
+	public void setClientIsRunning(boolean clientIsRunning) {
 		this.clientIsRunning = clientIsRunning;
 	}
 }
