@@ -1,6 +1,7 @@
 import jdk.internal.util.xml.impl.Input;
 
 import java.awt.*;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -12,11 +13,10 @@ public class Client extends Thread {
 	
 	int port;
 	String host; //Localhost
-	Socket socket;
-	InputStream inputStream;
-	ObjectInputStream read;
 	PaintArea paintArea;
-	ArrayList<MyFormTemplate> paintAreaForms;
+	ObjectInputStream read;
+	Socket socket;
+
 	boolean threadIsRunning = true;
 	
 	public Client(PaintArea paintArea) {
@@ -31,7 +31,8 @@ public class Client extends Thread {
 		while(threadIsRunning) {
 			try {
 				recieveData();
-				Thread.sleep(10);
+
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -46,8 +47,10 @@ public class Client extends Thread {
 			System.out.println("Trying to connect to port " + port + "and host " + host + ".");
 			socket = new Socket(host, port);
 			System.out.println("Client is connected to" + socket.getInetAddress().getHostAddress() + ".");
-			inputStream = socket.getInputStream();
-			read = new ObjectInputStream(inputStream);
+
+			read = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+			//read = new ObjectInputStream(socket.getInputStream());
+
 
 		}
 
@@ -66,16 +69,9 @@ public class Client extends Thread {
 	public void stopConnection() {
 
 		try {
-			if(inputStream != null) {
-				inputStream.close();
-			}
-			if (read != null) {
-				read.close();
-			}
-			if(socket != null) {
-				socket.close();
-			}
-		} catch (IOException e) {
+			read.close();
+			socket.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -84,13 +80,27 @@ public class Client extends Thread {
 	public void recieveData() {
 
 		try {
-			paintAreaForms = (ArrayList<MyFormTemplate>) read.readObject();
-			paintArea.setForms(paintAreaForms);
-			paintArea.repaint();
+			Object data = read.readObject();
+
+			if(data instanceof ArrayList) {
+
+				if (data != null) {
+
+					ArrayList<MyFormTemplate> paintAreaForms = (ArrayList<MyFormTemplate>) data;
+					System.out.println("Data recieved:" + ((ArrayList<MyFormTemplate>) data).size());
+					paintArea.setForms((ArrayList<MyFormTemplate>) data);
+					paintArea.repaint();
+
+
+				}
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (NullPointerException e) {
 			e.printStackTrace();
 		}
 	}

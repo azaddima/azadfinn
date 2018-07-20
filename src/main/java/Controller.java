@@ -28,7 +28,7 @@ public class Controller {
 
 	private Server server;
 
-	private Client client = new Client(paintArea);
+	private Client client;
 
 	Thread thread;
 
@@ -46,6 +46,7 @@ public class Controller {
 
     	paintArea.addCircle(300,300);
 
+		client = new Client(paintArea);
 
     	server = new Server(paintArea.getForms());
 

@@ -2,10 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -32,7 +29,7 @@ public class Server extends Observable implements Runnable {
 
 			try {
 				sendData();
-				Thread.sleep(10);
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -67,16 +64,11 @@ public class Server extends Observable implements Runnable {
 	public void stopServer() {
 
 		try {
-			if(socket != null) {
-				socket.close();
-			}
-			if(write != null) {
-				write.close();
-			}
-			serverSocket.close();
-
+			outputStream.close();
+			write.close();
+			socket.close();
 			threadIsRunning = false;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -96,10 +88,12 @@ public class Server extends Observable implements Runnable {
 	}
 
 	public void sendData() {
-
 		try {
+
 			write.writeObject(paintAreaForms);
 			write.flush();
+			System.out.println("Data was sent: " + paintAreaForms.size());
+			write.reset();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
