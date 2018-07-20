@@ -540,6 +540,8 @@ public class GuiForm extends JFrame implements Observer {
         getCircleBtn().setEnabled(false);
         getServerStartButton().setEnabled(false);
         getServerPortTextField().setEnabled(false);
+        sinusCheckBox.setEnabled(false);
+        randomColorCheckBox.setEnabled(false);
     }
 
     public void enableForClient() {
@@ -561,6 +563,8 @@ public class GuiForm extends JFrame implements Observer {
         getCircleBtn().setEnabled(true);
         getServerStartButton().setEnabled(true);
         getServerPortTextField().setEnabled(true);
+        sinusCheckBox.setEnabled(true);
+        randomColorCheckBox.setEnabled(true);
     }
 
     public void disableForServer() {

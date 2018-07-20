@@ -1,9 +1,5 @@
-import jdk.internal.util.xml.impl.Input;
-
-import java.awt.*;
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -16,6 +12,7 @@ public class Client extends Thread {
 	PaintArea paintArea;
 	ObjectInputStream read;
 	Socket socket;
+	boolean clientIsRunning = false;
 
 	boolean threadIsRunning = true;
 	
@@ -115,5 +112,9 @@ public class Client extends Thread {
 
 	public void setHost(String host) {
 		this.host = host;
+	}
+
+	public void clientStarted(boolean clientStarted) {
+		this.clientIsRunning = clientIsRunning;
 	}
 }
