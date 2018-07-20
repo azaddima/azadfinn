@@ -64,10 +64,11 @@ public class Server extends Observable implements Runnable {
 	public void stopServer() {
 
 		try {
+			threadIsRunning = false;
 			outputStream.close();
 			write.close();
 			socket.close();
-			threadIsRunning = false;
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

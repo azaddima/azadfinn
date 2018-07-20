@@ -9,7 +9,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.net.BindException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 
 public class Controller {
@@ -29,6 +31,9 @@ public class Controller {
 	private Server server;
 
 	private Client client;
+
+	private static final Pattern PATTERN = Pattern.compile(
+			"^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
 	Thread thread;
 
@@ -64,12 +69,31 @@ public class Controller {
 		view.getServerStartButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				server.setPort(Integer.parseInt(view.getServerPortTextField().getText()));
-				//server.startServer(Integer.parseInt(view.getServerPortTextField().getText()));
-				thread = new Thread(server);
-				thread.start();
-				view.getServerStartButton().setEnabled(false);
-				view.getServerStopButton().setEnabled(true);
+				if(view.getServerPortTextField().getText().equals("")) {
+					JOptionPane.showMessageDialog(null,
+							"Error: Please insert a port between 1000 and 9999.", "Error Massage",
+							JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					try {
+						int port = Integer.parseInt(view.getServerPortTextField().getText());
+						if (port < 1000 || port > 9999) {
+							JOptionPane.showMessageDialog(null,
+									"Error: Please insert a port between 1000 and 9999.", "Error Massage",
+									JOptionPane.ERROR_MESSAGE);
+						}
+						else {
+							server.setPort(port);
+							//server.startServer(Integer.parseInt(view.getServerPortTextField().getText()));
+							thread = new Thread(server);
+							thread.start();
+							view.disableForServer();
+						}
+					}
+					catch (Exception be) {
+
+					}
+				}
 			}
 		});
 
@@ -80,8 +104,7 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				server.stopServer();
 				server.setThreadIsRunning(false);
-				view.getServerStopButton().setEnabled(false);
-				view.getServerStartButton().setEnabled(true);
+				view.enableForServer();
 
 
 			}
@@ -91,12 +114,35 @@ public class Controller {
 		view.getClientStartButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				client.setPort(Integer.parseInt(view.getClientPortTextField().getText()));
-				client.setHost(view.getClientIpAddressTextField().getText());
-				client.start();
-				view.getClientStartButton().setEnabled(false);
-				view.getClientStopButton().setEnabled(true);
 
+				try {
+
+					if (view.getClientPortTextField().getText().equals("")) {
+						JOptionPane.showMessageDialog(null,
+								"Error: Please insert a port between 1000 and 9999.", "Error Massage",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					int port = Integer.parseInt(view.getClientPortTextField().getText());
+					if (port < 1000 || port > 9999) {
+						JOptionPane.showMessageDialog(null,
+								"Error: Please insert a port between 1000 and 9999.", "Error Massage",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					String host = view.getClientIpAddressTextField().getText();
+					if (!PATTERN.matcher(host).matches()) {
+						JOptionPane.showMessageDialog(null,
+								"Error: Please insert a correct IP address (f.e.141.22.65.73).", "Error Massage",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						client.setPort(port);
+						client.setHost(host);
+						client.start();
+						view.disableForClient();
+					}
+				}
+				catch (Exception ec) {
+
+				}
 			}
 		});
 
@@ -106,8 +152,7 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				client.stopConnection();
 				client.setThreadIsRunning(false);
-				view.getClientStopButton().setEnabled(false);
-				view.getClientStartButton().setEnabled(true);
+				view.enableForClient();
 			}
 		});
     	
@@ -178,7 +223,7 @@ public class Controller {
 				 int value = Integer.parseInt(view.getTextField().getText());
 			     if ( value < 0 || value > 255){
 			       JOptionPane.showMessageDialog(null,
-			          "Error: Eine gültige Zahl eingeben: 0 -255", "Error Massage",
+			          "Error: Please insert a correct number between 0 an 255.", "Error Massage",
 			          JOptionPane.ERROR_MESSAGE);
 			     } else {
 			    	 view.getColorSliderRed().setValue(value);
@@ -200,7 +245,7 @@ public class Controller {
 				 int value = Integer.parseInt(view.getTextField_1().getText());
 			     if ( value < 0 || value > 255){
 			       JOptionPane.showMessageDialog(null,
-			          "Error: Eine gültige Zahl eingeben: 0 -255", "Error Massage",
+			          "Error: Please insert a correct number between 0 an 255.", "Error Massage",
 			          JOptionPane.ERROR_MESSAGE);
 			     } else {
 			    	 view.getColorSliderGreen().setValue(value);
@@ -222,7 +267,7 @@ public class Controller {
 				 int value = Integer.parseInt(view.getTextField_2().getText());
 			     if ( value < 0 || value > 255){
 			       JOptionPane.showMessageDialog(null,
-			          "Error: Eine gültige Zahl eingeben: 0 -255", "Error Massage",
+			          "Error: Please insert a correct number between 0 an 255.", "Error Massage",
 			          JOptionPane.ERROR_MESSAGE);
 			     } else {
 			    	 view.getColorSliderBlue().setValue(value);
