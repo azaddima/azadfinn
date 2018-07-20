@@ -504,4 +504,84 @@ public class GuiForm extends JFrame implements Observer {
     public void setDeleteBtn(JButton deleteBtn) {
         this.deleteBtn = deleteBtn;
     }
+
+    public JPanel getPositionPanel() {
+        return positionPanel;
+    }
+
+    public JPanel getDimensionPanel() {
+        return dimensionPanel;
+    }
+
+    public JPanel getPositionCenter() {
+        return positionCenter;
+    }
+
+    public JPanel getDimensionCenter() {
+        return dimensionCenter;
+    }
+
+    public void disableForClient() {
+        getClientStartButton().setEnabled(false);
+        getClientStopButton().setEnabled(true);
+        getClientPortTextField().setEnabled(false);
+        getColorSliderBlue().setEnabled(false);
+        getColorSliderGreen().setEnabled(false);
+        getColorSliderRed().setEnabled(false);
+        getTextField().setEnabled(false);
+        getTextField_1().setEnabled(false);
+        getTextField_2().setEnabled(false);
+        getxSpinner().setEnabled(false);
+        getySpinner().setEnabled(false);
+        getSlider1().setEnabled(false);
+        getSpinner1().setEnabled(false);
+        getSpinner2().setEnabled(false);
+        getAddRectBtn().setEnabled(false);
+        getCircleBtn().setEnabled(false);
+        getServerStartButton().setEnabled(false);
+        getServerPortTextField().setEnabled(false);
+    }
+
+    public void enableForClient() {
+        getClientStartButton().setEnabled(true);
+        getClientStopButton().setEnabled(false);
+        getClientPortTextField().setEnabled(true);
+        getColorSliderBlue().setEnabled(true);
+        getColorSliderGreen().setEnabled(true);
+        getColorSliderRed().setEnabled(true);
+        getTextField().setEnabled(true);
+        getTextField_1().setEnabled(true);
+        getTextField_2().setEnabled(true);
+        getxSpinner().setEnabled(true);
+        getySpinner().setEnabled(true);
+        getSlider1().setEnabled(true);
+        getSpinner1().setEnabled(true);
+        getSpinner2().setEnabled(true);
+        getAddRectBtn().setEnabled(true);
+        getCircleBtn().setEnabled(true);
+        getServerStartButton().setEnabled(true);
+        getServerPortTextField().setEnabled(true);
+    }
+
+    public void disableForServer() {
+        getServerStartButton().setEnabled(false);
+        getServerStopButton().setEnabled(true);
+        getServerPortTextField().setEnabled(false);
+        getClientPortTextField().setEnabled(false);
+        getClientIpAddressTextField().setEnabled(false);
+        getClientStartButton().setEnabled(false);
+        getClientStopButton().setEnabled(false);
+    }
+    public void enableForServer() {
+        getServerStartButton().setEnabled(true);
+        getServerStopButton().setEnabled(false);
+        getServerPortTextField().setEnabled(true);
+        getClientPortTextField().setEnabled(true);
+        getClientIpAddressTextField().setEnabled(true);
+        getClientStartButton().setEnabled(true);
+        getClientStopButton().setEnabled(true);
+    }
+
+
+
 }
