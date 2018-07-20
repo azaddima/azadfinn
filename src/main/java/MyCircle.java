@@ -4,28 +4,25 @@ import java.io.Serializable;
 
 public class MyCircle extends MyFormTemplate implements Serializable {
 
+    /*
     int height;
     int width;
+    */
 
     Ellipse2D ellipse2D;
 
     public MyCircle(int x, int y, int height, int width){
         super(x, y);
-        this.height = height;
-        this.width = width;
+        setWidth(width);
+        setHeight(height);
+
+        setWidhtSave(width);
+        setHeightSave(height);
+
 
         ellipse2D = new Ellipse2D.Double(x, y, width, height);
     }
 
-    public boolean clickedInside(int mouseX, int mouseY) {
-
-        int xPos = getX();
-        int yPos = getY();
-
-
-
-        return false;
-    }
 
     void draw(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
@@ -39,6 +36,7 @@ public class MyCircle extends MyFormTemplate implements Serializable {
         // TODO: 19.07.2018 add draw? in settings
     }
 
+    /*
     public int getHeight() {
         return height;
     }
@@ -54,9 +52,10 @@ public class MyCircle extends MyFormTemplate implements Serializable {
     public void setWidth(int width) {
         this.width = width;
     }
+    */
 
     public void redrawEllipse(){
-        ellipse2D = new Ellipse2D.Double(getX(), getY(), width, height);
+        ellipse2D = new Ellipse2D.Double(getX(), getY(), getWidth(), getHeight());
     }
 
     public Ellipse2D getEllipse2D(){

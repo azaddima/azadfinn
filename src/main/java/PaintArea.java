@@ -99,7 +99,6 @@ public class PaintArea extends JPanel implements Observer, Serializable{
 				}
 			}
 
-
 			// TODO: 19.07.2018 Is circle pressed?
 			if(form instanceof MyCircle){
 				if(((MyCircle) form).getEllipse2D().contains(x,y)){
@@ -114,10 +113,13 @@ public class PaintArea extends JPanel implements Observer, Serializable{
 
 
 		}
-
 		setActiveLayer(highestLayer);
 		
 		System.out.println("Highest Layer: " + highestLayer);
+	}
+
+	public void deleteActiveLayer(){
+		forms.remove(activeLayer);
 	}
 	
 	public ArrayList<MyFormTemplate> getForms() {

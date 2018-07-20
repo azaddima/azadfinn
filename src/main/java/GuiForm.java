@@ -14,9 +14,9 @@ public class GuiForm extends JFrame implements Observer {
     private JSlider colorSliderRed;
     private JSlider colorSliderGreen;
     private JSlider colorSliderBlue;
-    private JTextField textField;
-    private JTextField textField_1;
-    private JTextField textField_2;
+    private JTextField redValue;
+    private JTextField greenValue;
+    private JTextField blueValue;
     private JPanel colorCenter;
     private JPanel color;
     private JPanel workSpace;
@@ -36,9 +36,9 @@ public class GuiForm extends JFrame implements Observer {
     private JTextField clientPortTextField;
     private JTextField clientIpAddressTextField;
     private JButton clientStartButton;
-    private JSlider slider1;
-    private JSpinner spinner1;
-    private JSpinner spinner2;
+    private JSlider sizeSlider;
+    private JSpinner heightSpinner;
+    private JSpinner widthSpinner;
     private JPanel serverPanel;
     private JLabel serverLabel;
     private JLabel portLabel;
@@ -53,6 +53,13 @@ public class GuiForm extends JFrame implements Observer {
     private JButton circleBtn;
     private JButton serverStopButton;
     private JButton clientStopButton;
+    private JPanel animationPanel;
+    private JPanel animationCenter;
+    private JLabel randomColorLabel;
+    private JLabel sinusLabel;
+    private JCheckBox sinusCheckBox;
+    private JCheckBox randomColorCheckBox;
+    private JButton deleteBtn;
 
     //Canvas
     private PaintArea paintArea = new PaintArea();
@@ -118,16 +125,37 @@ public class GuiForm extends JFrame implements Observer {
         if(arg instanceof Color) {
 
             // Color text Fields
-            textField.setText(( (Color) arg).getRed() + "");
-            textField_1.setText(((Color) arg).getGreen() + "");
-            textField_2.setText(((Color) arg).getBlue() + "");
+            redValue.setText(( (Color) arg).getRed() + "");
+            greenValue.setText(((Color) arg).getGreen() + "");
+            blueValue.setText(((Color) arg).getBlue() + "");
 
         }
 
+        //Inet adress at beginning
         if(arg instanceof InetAddress) {
-            System.out.println("hellou");
+            System.out.println("Trying to set Inetadress to GUI");
             serverIpLabel.setText(((((InetAddress) arg).getHostAddress())+ ""));
         }
+
+        //Set spinner if form is resized
+        if(arg instanceof String){
+            String str = (String)arg;
+
+            if(str.contains("width")){
+
+                str = str.replaceAll("\\D+","");
+
+                widthSpinner.setValue(Integer.parseInt(str));
+
+            } else if(str.contains("height")){
+
+                str = str.replaceAll("\\D+","");
+                heightSpinner.setValue(Integer.parseInt(str));
+            }
+
+
+        }
+
 
 
     }
@@ -142,16 +170,21 @@ public class GuiForm extends JFrame implements Observer {
             colorSliderGreen.setValue(green);
             colorSliderBlue.setValue(blue);
 
-            textField.setText(red + "");
-            textField_1.setText(green + "");
-            textField_2.setText(blue + "");
+            redValue.setText(red + "");
+            greenValue.setText(green + "");
+            blueValue.setText(blue + "");
 
             xSpinner.setValue(((MyRectangle) o).getX());
             ySpinner.setValue(((MyRectangle) o).getY());
 
             // Width, Height, and Sizefactor
-            spinner2.setValue(((MyRectangle) o).getWidth());
-            spinner1.setValue(((MyRectangle) o).getHeight());
+            widthSpinner.setValue(((MyRectangle) o).getWidth());
+            heightSpinner.setValue(((MyRectangle) o).getHeight());
+            sizeSlider.setValue(((MyRectangle) o).getSize());
+
+            //Animation
+            sinusCheckBox.setSelected(((MyRectangle) o).isSinus());
+            randomColorCheckBox.setSelected(((MyRectangle) o).isRandomClr());
 
         }
 
@@ -164,18 +197,56 @@ public class GuiForm extends JFrame implements Observer {
             colorSliderGreen.setValue(green);
             colorSliderBlue.setValue(blue);
 
-            textField.setText(red + "");
-            textField_1.setText(green + "");
-            textField_2.setText(blue + "");
+            redValue.setText(red + "");
+            greenValue.setText(green + "");
+            blueValue.setText(blue + "");
 
             xSpinner.setValue(((MyCircle) o).getX());
             ySpinner.setValue(((MyCircle) o).getY());
 
             // Width, Height, and Sizefactor
-            spinner2.setValue(((MyCircle) o).getWidth());
-            spinner1.setValue(((MyCircle) o).getHeight());
+            widthSpinner.setValue(((MyCircle) o).getWidth());
+            heightSpinner.setValue(((MyCircle) o).getHeight());
+            sizeSlider.setValue(((MyCircle) o).getSize());
 
+            //Animation
+            sinusCheckBox.setSelected(((MyCircle) o).isSinus());
+            randomColorCheckBox.setSelected(((MyCircle) o).isRandomClr());
         }
+
+
+    }
+
+    public void disableWorkSpace(){
+        colorSliderRed.setEnabled(false);
+        colorSliderGreen.setEnabled(false);
+        colorSliderBlue.setEnabled(false);
+        redValue.setEnabled(false);
+        greenValue.setEnabled(false);
+        blueValue.setEnabled(false);
+        xSpinner.setEnabled(false);
+        ySpinner.setEnabled(false);
+        widthSpinner.setEnabled(false);
+        heightSpinner.setEnabled(false);
+        sizeSlider.setEnabled(false);
+        sinusCheckBox.setEnabled(false);
+        randomColorCheckBox.setEnabled(false);
+    }
+
+    public void enableWorkSpace(){
+        colorSliderRed.setEnabled(true);
+        colorSliderGreen.setEnabled(true);
+        colorSliderBlue.setEnabled(true);
+        redValue.setEnabled(true);
+        greenValue.setEnabled(true);
+        blueValue.setEnabled(true);
+        xSpinner.setEnabled(true);
+        ySpinner.setEnabled(true);
+        widthSpinner.setEnabled(true);
+        heightSpinner.setEnabled(true);
+        sizeSlider.setEnabled(true);
+        sinusCheckBox.setEnabled(true);
+        randomColorCheckBox.setEnabled(true);
     }
 
     public JPanel getPanel1() {
@@ -234,28 +305,28 @@ public class GuiForm extends JFrame implements Observer {
         this.colorSliderBlue = colorSliderBlue;
     }
 
-    public JTextField getTextField() {
-        return textField;
+    public JTextField getRedValue() {
+        return redValue;
     }
 
-    public void setTextField(JTextField textField) {
-        this.textField = textField;
+    public void setRedValue(JTextField redValue) {
+        this.redValue = redValue;
     }
 
-    public JTextField getTextField_1() {
-        return textField_1;
+    public JTextField getGreenValue() {
+        return greenValue;
     }
 
-    public void setTextField_1(JTextField textField_1) {
-        this.textField_1 = textField_1;
+    public void setGreenValue(JTextField greenValue) {
+        this.greenValue = greenValue;
     }
 
-    public JTextField getTextField_2() {
-        return textField_2;
+    public JTextField getBlueValue() {
+        return blueValue;
     }
 
-    public void setTextField_2(JTextField textField_2) {
-        this.textField_2 = textField_2;
+    public void setBlueValue(JTextField blueValue) {
+        this.blueValue = blueValue;
     }
 
     public JPanel getColorCenter() {
@@ -371,28 +442,28 @@ public class GuiForm extends JFrame implements Observer {
         return clientStartButton;
     }
 
-    public JSlider getSlider1() {
-        return slider1;
+    public JSlider getSizeSlider() {
+        return sizeSlider;
     }
 
-    public void setSlider1(JSlider slider1) {
-        this.slider1 = slider1;
+    public void setSizeSlider(JSlider sizeSlider) {
+        this.sizeSlider = sizeSlider;
     }
 
-    public JSpinner getSpinner1() {
-        return spinner1;
+    public JSpinner getHeightSpinner() {
+        return heightSpinner;
     }
 
-    public void setSpinner1(JSpinner spinner1) {
-        this.spinner1 = spinner1;
+    public void setHeightSpinner(JSpinner heightSpinner) {
+        this.heightSpinner = heightSpinner;
     }
 
-    public JSpinner getSpinner2() {
-        return spinner2;
+    public JSpinner getWidthSpinner() {
+        return widthSpinner;
     }
 
-    public void setSpinner2(JSpinner spinner2) {
-        this.spinner2 = spinner2;
+    public void setWidthSpinner(JSpinner widthSpinner) {
+        this.widthSpinner = widthSpinner;
     }
 
     public JButton getCircleBtn() {
@@ -408,5 +479,29 @@ public class GuiForm extends JFrame implements Observer {
 
     public JButton getClientStopButton() {
         return clientStopButton;
+    }
+
+    public JCheckBox getSinusCheckBox() {
+        return sinusCheckBox;
+    }
+
+    public void setSinusCheckBox(JCheckBox sinusCheckBox) {
+        this.sinusCheckBox = sinusCheckBox;
+    }
+
+    public JCheckBox getRandomColorCheckBox() {
+        return randomColorCheckBox;
+    }
+
+    public void setRandomColorCheckBox(JCheckBox randomColorCheckBox) {
+        this.randomColorCheckBox = randomColorCheckBox;
+    }
+
+    public JButton getDeleteBtn() {
+        return deleteBtn;
+    }
+
+    public void setDeleteBtn(JButton deleteBtn) {
+        this.deleteBtn = deleteBtn;
     }
 }

@@ -11,16 +11,16 @@ public class MyRectangle extends MyFormTemplate implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	//	private Graphics g;
-	private int height;
-	private int width;
 	
 	//Observer	
 	public MyRectangle(int x, int y, int height, int width) {
 		super(x, y);
-		this.height = height;
-		this.width = width;
-		
+
+		setWidth(width);
+		setHeight(height);
+		setWidhtSave(width);
+		setHeightSave(height);
+
 	}
 
 
@@ -30,7 +30,7 @@ public class MyRectangle extends MyFormTemplate implements Serializable {
 		int yPos = getY();
 		
 		if(mouseX >= xPos && mouseY >= yPos) {
-			if(mouseX <= (xPos + width) && mouseY <= (yPos + height) ){
+			if(mouseX <= (xPos + getWidth()) && mouseY <= (yPos + getHeight()) ){
 				return true;
 				
 			}
@@ -46,26 +46,12 @@ public class MyRectangle extends MyFormTemplate implements Serializable {
 		super.getObserver().notifyObservers();
 	}
 
-	public int getHeight() {
-		return height;
-	}
 
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
 
 	void draw(Graphics g) {
 		
 		g.setColor(getC());
-		g.fillRect(getX(), getY(), width, height);
+		g.fillRect(getX(), getY(), getWidth(), getHeight());
 			
 	}
 	

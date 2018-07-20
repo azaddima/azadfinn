@@ -2,27 +2,21 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 
 public class Controller {
 	
 	
-	private Rectangle rect = new Rectangle(200,300,300,300);
+	//private Rectangle rect = new Rectangle(200,300,300,300);
 
 
 	private PaintArea paintArea;
 	private MyFormTemplate activeForm; //model
 
 	private GuiForm view = new GuiForm();
-	//private Gui view = new Gui();
+
 
 	private FileIo fileIo = new FileIo();
 
@@ -32,13 +26,20 @@ public class Controller {
 
 	Thread thread;
 
+	//Timer for animation
+	Timer timerRepaint;
+
 	    
     public Controller(){
     	
-    	
+    	//Disable workspace
+		view.disableWorkSpace();
     	
     	//get Canvas
     	paintArea = view.getPaintArea();
+
+    	// Timer for repaint canvas
+		activateRepainter();
     	
     	//add rects
     	paintArea.addRect(100, 100);
@@ -164,7 +165,7 @@ public class Controller {
 			
 		
 		// COLOR TEXTAREA
-		view.getTextField().addKeyListener(new KeyAdapter() {
+		view.getRedValue().addKeyListener(new KeyAdapter() {
 			
 			
 			public void keyPressed(KeyEvent e) {
@@ -175,7 +176,7 @@ public class Controller {
 			
 			public void checkChange() {
 				 
-				 int value = Integer.parseInt(view.getTextField().getText());
+				 int value = Integer.parseInt(view.getRedValue().getText());
 			     if ( value < 0 || value > 255){
 			       JOptionPane.showMessageDialog(null,
 			          "Error: Eine gültige Zahl eingeben: 0 -255", "Error Massage",
@@ -187,7 +188,7 @@ public class Controller {
 			}
 		});
 		
-		view.getTextField_1().addKeyListener(new KeyAdapter() {
+		view.getGreenValue().addKeyListener(new KeyAdapter() {
 			
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -197,7 +198,7 @@ public class Controller {
 			
 			public void checkChange() {
 				 
-				 int value = Integer.parseInt(view.getTextField_1().getText());
+				 int value = Integer.parseInt(view.getGreenValue().getText());
 			     if ( value < 0 || value > 255){
 			       JOptionPane.showMessageDialog(null,
 			          "Error: Eine gültige Zahl eingeben: 0 -255", "Error Massage",
@@ -209,7 +210,7 @@ public class Controller {
 			}
 		});
 		
-		view.getTextField_2().addKeyListener(new KeyAdapter() {
+		view.getBlueValue().addKeyListener(new KeyAdapter() {
 			
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -219,7 +220,7 @@ public class Controller {
 			
 			public void checkChange() {
 				
-				 int value = Integer.parseInt(view.getTextField_2().getText());
+				 int value = Integer.parseInt(view.getBlueValue().getText());
 			     if ( value < 0 || value > 255){
 			       JOptionPane.showMessageDialog(null,
 			          "Error: Eine gültige Zahl eingeben: 0 -255", "Error Massage",
@@ -254,12 +255,12 @@ public class Controller {
 		//Dimensions ------
 		// Rectangle
 
-		view.getSpinner2().addChangeListener(new ChangeListener() {
+		view.getWidthSpinner().addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 
 				if (activeForm instanceof MyRectangle) {
-					((MyRectangle) activeForm).setWidth((Integer) view.getSpinner2().getValue());
+					((MyRectangle) activeForm).setWidth((Integer) view.getWidthSpinner().getValue());
 					System.out.println(((MyRectangle) activeForm).getWidth() + " ");
 
 					paintArea.repaint();
@@ -268,7 +269,7 @@ public class Controller {
 				// change circle width
 
 				if(activeForm instanceof MyCircle){
-					((MyCircle)activeForm).setWidth((Integer)view.getSpinner2().getValue());
+					((MyCircle)activeForm).setWidth((Integer)view.getWidthSpinner().getValue());
 
 					System.out.println(((MyCircle) activeForm).getWidth() + ": Height ");
 
@@ -279,14 +280,14 @@ public class Controller {
 		});
 
 
-		view.getSpinner1().addChangeListener(new ChangeListener() {
+		view.getHeightSpinner().addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 
 				//change height rectangle
 				if (activeForm instanceof MyRectangle) {
 
-					((MyRectangle) activeForm).setHeight((Integer) view.getSpinner1().getValue());
+					((MyRectangle) activeForm).setHeight((Integer) view.getHeightSpinner().getValue());
 					System.out.println(((MyRectangle) activeForm).getHeight() + ": Height ");
 
 					paintArea.repaint();
@@ -294,7 +295,7 @@ public class Controller {
 
 				if(activeForm instanceof MyCircle){
 
-					((MyCircle)activeForm).setHeight((Integer)view.getSpinner1().getValue());
+					((MyCircle)activeForm).setHeight((Integer)view.getHeightSpinner().getValue());
 					System.out.println(((MyCircle) activeForm).getHeight() + ": Height ");
 
 
@@ -303,6 +304,48 @@ public class Controller {
 			}
 		});
 
+
+		view.getSizeSlider().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				activeForm.setSize(view.getSizeSlider().getValue());
+				paintArea.repaint();
+			}
+		});
+
+		//ANIMATION CHECKBOX LISTENER
+
+		view.getSinusCheckBox().addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+
+				if(e.getStateChange() == ItemEvent.SELECTED){
+
+
+					activeForm.setSinus(true);
+					activeForm.setSinusMovement(5, view.getBounds().height, view.getBounds().width);
+
+				} else {
+					activeForm.setSinus(false);
+					activeForm.stopSinusMovement();
+				}
+
+			}
+		});
+
+		view.getRandomColorCheckBox().addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED){
+
+					activeForm.setRandomClr(true);
+					activeForm.setRandomColorAnim(1,5,10);
+				} else {
+					activeForm.setRandomClr(false);
+					activeForm.stopRanfomColorAnim();
+				}
+			}
+		});
 
 		// -------
 		// BOTTOM TAB
@@ -345,6 +388,14 @@ public class Controller {
 				paintArea.resetPaintState();
 			}
 		});
+
+    	view.getDeleteBtn().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				paintArea.deleteActiveLayer();
+				view.getDeleteBtn().setEnabled(false);
+			}
+		});
     	
     	
     	// MOUSELISTENER
@@ -366,12 +417,15 @@ public class Controller {
 
 
 
-                // Updates "Work Space" when active activeForm is changed
+                // Workspace update when active activeForm(Layer) is changed
+				if(paintArea.getActiveLayer() == -1) {
+					view.disableWorkSpace();
+					view.getDeleteBtn().setEnabled(false);
+				} else {
+					view.enableWorkSpace();
+					view.getDeleteBtn().setEnabled(true);
+				}
 				view.updateWorkSpace(activeForm);
-
-
-
-
 
 
 				//PAINT STATE 1
@@ -528,6 +582,18 @@ public class Controller {
     	}
     	
     }
+
+    public void activateRepainter(){
+		//Timer for moving the Form in a sinus curve
+		timerRepaint = new Timer(10, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				paintArea.repaint();
+			}
+		});
+
+		timerRepaint.start();
+	}
     
 }
 
