@@ -99,13 +99,6 @@ public class GuiForm extends JFrame implements Observer {
         mntmOpen = new JMenuItem("Open");
         mnFile.add(mntmOpen);
 
-        JMenu mnEdit = new JMenu("Edit");
-        menuBar.add(mnEdit);
-        JMenuItem mntmUndo = new JMenuItem("Undo");
-        mnEdit.add(mntmUndo);
-        JMenuItem mntmRedo = new JMenuItem("Redo");
-        mnEdit.add(mntmRedo);
-
 
         setVisible(true);
         setSize(1000,1000);
