@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.net.BindException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -23,21 +24,14 @@ public class Controller {
 
 	private PaintArea paintArea;
 	private MyFormTemplate activeForm; //model
-
 	private GuiForm view = new GuiForm();
-
-
 	private FileIo fileIo = new FileIo();
-
 	private Server server;
-
 	private Client client;
-
+	//Pattern that is controlling whether the ip address is correct
 	private static final Pattern PATTERN = Pattern.compile(
 			"^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
-
 	Thread thread;
-
 	//Timer for animation
 	Timer timerRepaint;
 
@@ -56,11 +50,9 @@ public class Controller {
     	//add rects
     	paintArea.addRect(100, 100);
     	paintArea.addRect(250, 100);
-
     	paintArea.addCircle(300,300);
-
+    	//Instance client and server after paintArea is completely loaded
 		client = new Client(paintArea);
-
     	server = new Server(paintArea.getForms());
 
     	//connect observer and observable at startup
@@ -73,7 +65,6 @@ public class Controller {
 		server.getIpAddress();
 
 		//start Server
-
 		view.getServerStartButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -91,6 +82,7 @@ public class Controller {
 									JOptionPane.ERROR_MESSAGE);
 						}
 						else {
+							server.setThreadIsRunning(true);
 							server.setPort(port);
 							//server.startServer(Integer.parseInt(view.getServerPortTextField().getText()));
 							thread = new Thread(server);
@@ -106,15 +98,11 @@ public class Controller {
 		});
 
 		//Stop Server
-
 		view.getServerStopButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				server.stopServer();
 				server.setThreadIsRunning(false);
 				view.enableForServer();
-
-
 			}
 		});
 
@@ -122,7 +110,6 @@ public class Controller {
 		view.getClientStartButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				try {
 
 					if (view.getClientPortTextField().getText().equals("")) {
@@ -169,7 +156,6 @@ public class Controller {
     	view.getColorSliderRed().addChangeListener(new ChangeListener() {
 			
 			public void stateChanged(ChangeEvent e) {
-				
 				if(activeForm != null) {
 					int redValue = view.getColorSliderRed().getValue();
 					activeForm.setR(redValue);
@@ -179,14 +165,12 @@ public class Controller {
 					activeForm.setC();
 					paintArea.repaint();
 				}
-			
 			}
 		});
     	
 		view.getColorSliderGreen().addChangeListener(new ChangeListener() {
 			
 			public void stateChanged(ChangeEvent e) {
-				
 				if(activeForm != null) {
 					int greenValue = view.getColorSliderGreen().getValue();
 					activeForm.setG(greenValue);
@@ -202,7 +186,6 @@ public class Controller {
 		view.getColorSliderBlue().addChangeListener(new ChangeListener() {
 			
 			public void stateChanged(ChangeEvent e) {
-				
 				if(activeForm != null) {
 					int blueValue = view.getColorSliderBlue().getValue();
 					activeForm.setB(blueValue);
@@ -212,15 +195,12 @@ public class Controller {
 					activeForm.setC();
 					paintArea.repaint();
 				}
-				
-			
 			}
 		});
 			
 		
 		// COLOR TEXTAREA
 		view.getRedValue().addKeyListener(new KeyAdapter() {
-			
 			
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -316,7 +296,6 @@ public class Controller {
 				if (activeForm instanceof MyRectangle) {
 					((MyRectangle) activeForm).setWidth((Integer) view.getWidthSpinner().getValue());
 					System.out.println(((MyRectangle) activeForm).getWidth() + " ");
-
 					paintArea.repaint();
 				}
 
@@ -324,10 +303,7 @@ public class Controller {
 
 				if(activeForm instanceof MyCircle){
 					((MyCircle)activeForm).setWidth((Integer)view.getWidthSpinner().getValue());
-
 					System.out.println(((MyCircle) activeForm).getWidth() + ": Height ");
-
-
 					paintArea.repaint();
 				}
 			}
@@ -343,7 +319,6 @@ public class Controller {
 
 					((MyRectangle) activeForm).setHeight((Integer) view.getHeightSpinner().getValue());
 					System.out.println(((MyRectangle) activeForm).getHeight() + ": Height ");
-
 					paintArea.repaint();
 				}
 
@@ -351,8 +326,6 @@ public class Controller {
 
 					((MyCircle)activeForm).setHeight((Integer)view.getHeightSpinner().getValue());
 					System.out.println(((MyCircle) activeForm).getHeight() + ": Height ");
-
-
 					paintArea.repaint();
 				}
 			}
@@ -374,7 +347,6 @@ public class Controller {
 			public void itemStateChanged(ItemEvent e) {
 
 				if(e.getStateChange() == ItemEvent.SELECTED){
-
 
 					activeForm.setSinus(true);
 					activeForm.setSinusMovement(5, view.getBounds().height, view.getBounds().width);
@@ -469,8 +441,6 @@ public class Controller {
 				//sets active FORM - for editing
 				activeForm = paintArea.getActiveForm();
 
-
-
                 // Workspace update when active activeForm(Layer) is changed
                 if(!client.IsClientStarted()) {
                     if (paintArea.getActiveLayer() == -1) {
@@ -484,7 +454,6 @@ public class Controller {
                     view.updateWorkSpace(activeForm);
                 }
 
-
 				//PAINT STATE 1
 				//---
 				//ADD RECTANGLE
@@ -495,7 +464,6 @@ public class Controller {
 
 					paintArea.addRect(e.getX() - dimensions, e.getY() - dimensions);
 					paintArea.repaint();
-
 					// Connect created Object with Observer
 					addLastObserver();
 				}
@@ -508,7 +476,6 @@ public class Controller {
 
 					paintArea.addCircle(e.getX(), e.getY());
 					paintArea.repaint();
-
 					//Connect created Object with observer
 					addLastObserver();
 				}
@@ -562,7 +529,6 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 
 				fileIo.saveData(paintArea);
-				
 			}
 		});
 
@@ -602,10 +568,8 @@ public class Controller {
 				paintArea.repaint();
 			}
 		});
-
 		timerRepaint.start();
 	}
-
 }
 
 

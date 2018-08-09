@@ -6,6 +6,8 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.Observable;
 
+
+//This class handles the connection from the drawer/server to the watcher/client
 public class Server extends Observable implements Runnable {
 	
 	InetAddress ip;
@@ -17,11 +19,11 @@ public class Server extends Observable implements Runnable {
 	ObjectOutputStream write;
 	ArrayList<MyFormTemplate> paintAreaForms;
 
-
 	public Server(ArrayList<MyFormTemplate> paintAreaForms) {
 		this.paintAreaForms = paintAreaForms;
 	}
 
+	//Thread that is handling the connection and sending the data
 	@Override
 	public void run() {
 		startServer();
@@ -34,8 +36,10 @@ public class Server extends Observable implements Runnable {
 				e.printStackTrace();
 			}
 		}
+		stopServer();
 	}
 
+	//Method to start the server and wait for a connector
 	public void startServer() {
 
 		try {
@@ -61,16 +65,25 @@ public class Server extends Observable implements Runnable {
 		}
 	}
 
+	//Method to stop the connection to the watcher
 	public void stopServer() {
 
 		try {
 			threadIsRunning = false;
-			outputStream.close();
-			write.close();
-			socket.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally {
+			try {
+				write.close();
+				outputStream.close();
+				socket.close();
+				System.out.println(socket.isClosed());
+				System.out.println("Ist geschlosen");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -88,6 +101,7 @@ public class Server extends Observable implements Runnable {
 
 	}
 
+	//Method to update the watcher
 	public void sendData() {
 		try {
 

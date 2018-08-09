@@ -5,6 +5,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+//This class contains everything that is used by the watcher to connect himself to the server
+
 public class Client extends Thread {
 	
 	int port;
@@ -13,7 +15,6 @@ public class Client extends Thread {
 	ObjectInputStream read;
 	Socket socket;
 	boolean clientIsRunning = false;
-
 	boolean threadIsRunning = true;
 	
 	public Client(PaintArea paintArea) {
@@ -21,6 +22,7 @@ public class Client extends Thread {
 	}
 
 
+	//Thread that takes care of transfering the data from server to client
 	@Override
 	public void run() {
 		super.run();
@@ -37,6 +39,7 @@ public class Client extends Thread {
 
 	}
 
+	//Method to connect the client to the server
 	public void connectToServer() {
 
 		try {
@@ -44,11 +47,7 @@ public class Client extends Thread {
 			System.out.println("Trying to connect to port " + port + "and host " + host + ".");
 			socket = new Socket(host, port);
 			System.out.println("Client is connected to" + socket.getInetAddress().getHostAddress() + ".");
-
 			read = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-			//read = new ObjectInputStream(socket.getInputStream());
-
-
 		}
 
 		catch (UnknownHostException e) {
@@ -63,6 +62,7 @@ public class Client extends Thread {
 
 	}
 
+	//Method to stop the connection to the server
 	public void stopConnection() {
 
 		try {
@@ -74,11 +74,14 @@ public class Client extends Thread {
 
 	}
 
+	//Method to
 	public void recieveData() {
 
 		try {
+			//Reading the data here
 			Object data = read.readObject();
 
+			//Check if data is an instance of the painted objects
 			if(data instanceof ArrayList) {
 
 				if (data != null) {
