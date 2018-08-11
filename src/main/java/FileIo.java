@@ -36,7 +36,6 @@ public class FileIo {
 				System.out.println("Es wurde irgendwo was gespeichert.");
 
 			} catch (Exception e) {
-				// TODO: handle exception
 				e.printStackTrace();
 			}
 		}
@@ -64,7 +63,6 @@ public class FileIo {
 				ois.close();
 
 			} catch (Exception e) {
-				// TODO: handle exception
 				e.printStackTrace();
 			}
 		}

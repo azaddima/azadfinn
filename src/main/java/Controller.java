@@ -51,6 +51,7 @@ public class Controller {
     	paintArea.addRect(100, 100);
     	paintArea.addRect(250, 100);
     	paintArea.addCircle(300,300);
+
     	//Instance client and server after paintArea is completely loaded
 		client = new Client(paintArea);
     	server = new Server(paintArea.getForms());
@@ -265,8 +266,6 @@ public class Controller {
 			}
 		});
 
-
-		// TODO: 18.07.2018 FIX ERROR: when no current layer is selected
 		
 		view.getxSpinner().addChangeListener(new ChangeListener() {
 			@Override
@@ -505,7 +504,7 @@ public class Controller {
 				activeForm.setX(e.getX() - 25); // Jspinner value need to be casted to an Integer
 				activeForm.setY(e.getY() - 25);
 				paintArea.repaint();
-			}
+		}
 		});
 
 

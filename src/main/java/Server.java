@@ -55,12 +55,12 @@ public class Server extends Observable implements Runnable {
 		}
 
 		catch (UnknownHostException e) {
-			// TODO: handle exception
+
 			e.printStackTrace();
 		}
 
 		catch (Exception e) {
-			// TODO: handle exception
+
 			e.printStackTrace();
 		}
 	}
@@ -80,7 +80,7 @@ public class Server extends Observable implements Runnable {
 				outputStream.close();
 				socket.close();
 				System.out.println(socket.isClosed());
-				System.out.println("Ist geschlosen");
+				System.out.println("Ist geschlossen");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

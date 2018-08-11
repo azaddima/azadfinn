@@ -51,12 +51,12 @@ public class Client extends Thread {
 		}
 
 		catch (UnknownHostException e) {
-			// TODO: handle exception
+
 			e.printStackTrace();
 		}
 
 		catch (Exception e) {
-			// TODO: handle exception
+
 			e.printStackTrace();
 		}
 

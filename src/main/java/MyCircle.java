@@ -33,26 +33,9 @@ public class MyCircle extends MyFormTemplate implements Serializable {
         g2.setColor(getC());
         g2.fill(ellipse2D);
 
-        // TODO: 19.07.2018 add draw? in settings
+
     }
 
-    /*
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-    */
 
     public void redrawEllipse(){
         ellipse2D = new Ellipse2D.Double(getX(), getY(), getWidth(), getHeight());

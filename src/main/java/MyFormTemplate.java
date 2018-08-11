@@ -67,7 +67,6 @@ public class MyFormTemplate implements Serializable{
 		width = widhtSave + size;
 		height = widhtSave + size;
 
-		// TODO: 20.07.2018 ?? other method
 		o.notifyObservers("width " + String.valueOf(width));
 		o.notifyObservers("height "+ String.valueOf(height));
 
@@ -93,10 +92,12 @@ public class MyFormTemplate implements Serializable{
 
 		timerRandomClr.start();
 
+
 	}
 
 	public void stopRanfomColorAnim(){
 		timerRandomClr.stop();
+		o.notifyObservers(this.c);
 	}
 
 	//TIMER MANAGEMENT

@@ -64,6 +64,7 @@ public class GuiForm extends JFrame implements Observer {
     //Canvas
     private PaintArea paintArea = new PaintArea();
 
+
     //Menu
     private JMenuItem mntmNew;
     private JMenuItem mntmSave;
@@ -79,13 +80,16 @@ public class GuiForm extends JFrame implements Observer {
         menuPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
         FlowLayout fl_menuPanel = (FlowLayout) menuPanel.getLayout();
         fl_menuPanel.setAlignment(FlowLayout.LEFT);
+        menuPanel.setBackground(new Color(242, 233, 230));
         getContentPane().add(menuPanel, BorderLayout.NORTH);
+
 
         //MenuBar
         JMenuBar menuBar = new JMenuBar();
         menuPanel.add(menuBar);
 
         //Canvas
+        paintArea.setBackground(new Color(255,255,255));
         getContentPane().add(paintArea, BorderLayout.CENTER);
 
 
@@ -121,6 +125,10 @@ public class GuiForm extends JFrame implements Observer {
             redValue.setText(( (Color) arg).getRed() + "");
             greenValue.setText(((Color) arg).getGreen() + "");
             blueValue.setText(((Color) arg).getBlue() + "");
+
+            colorSliderRed.setValue(((Color) arg).getRed());
+            colorSliderGreen.setValue(((Color) arg).getGreen());
+            colorSliderBlue.setValue(((Color) arg).getBlue());
 
         }
 
