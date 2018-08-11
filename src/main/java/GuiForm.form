@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GuiForm">
   <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="25" y="45" width="660" height="676"/>
+      <xy x="25" y="45" width="660" height="725"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -410,7 +410,7 @@
                         </constraints>
                         <properties>
                           <font size="14" style="1"/>
-                          <text value="Server"/>
+                          <text value="Streamer"/>
                         </properties>
                       </component>
                       <hspacer id="9b071">
@@ -511,7 +511,7 @@
                         </constraints>
                         <properties>
                           <font size="14" style="1"/>
-                          <text value="Client"/>
+                          <text value="Viewer"/>
                         </properties>
                       </component>
                       <hspacer id="fd94c">
