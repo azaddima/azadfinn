@@ -459,6 +459,8 @@ public class Controller {
 				if(isDragged == true){
 					followMouse.stop();
 					isDragged = false;
+					view.updateWorkSpace(activeForm);
+
 				}
 			}
 			public void mousePressed(MouseEvent e) {

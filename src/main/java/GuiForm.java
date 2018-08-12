@@ -121,7 +121,6 @@ public class GuiForm extends JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
 
-
         if(arg instanceof Color) {
 
             // Color text Fields
@@ -220,6 +219,8 @@ public class GuiForm extends JFrame implements Observer {
 
 
     }
+
+
 
     public void disableWorkSpace(){
         colorSliderRed.setEnabled(false);
@@ -588,6 +589,7 @@ public class GuiForm extends JFrame implements Observer {
         getClientStartButton().setEnabled(false);
         getClientStopButton().setEnabled(false);
     }
+
     public void enableForServer() {
         getServerStartButton().setEnabled(true);
         getServerStopButton().setEnabled(false);
