@@ -62,6 +62,7 @@ public class GuiForm extends JFrame implements Observer {
     private JPanel viewerPanel;
     private JPanel viewButtom;
     private JPanel viewerCenter;
+    private JButton moveObjectsButton;
 
     //Canvas
     private PaintArea paintArea = new PaintArea();
@@ -522,6 +523,14 @@ public class GuiForm extends JFrame implements Observer {
 
     public JPanel getDimensionCenter() {
         return dimensionCenter;
+    }
+
+    public JButton getMoveObjectsButton() {
+        return moveObjectsButton;
+    }
+
+    public void setMoveObjectsButton(JButton moveObjectsButton) {
+        this.moveObjectsButton = moveObjectsButton;
     }
 
     public void disableForClient() {

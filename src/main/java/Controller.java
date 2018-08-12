@@ -35,8 +35,21 @@ public class Controller {
 	//Timer for animation
 	Timer timerRepaint;
 
+	//Timer for Drag & Drop
+	Timer followMouse;
+
+	//bool for active Drag and Drop
+	private boolean isDragged;
+	private boolean allowDrag;
+
+
 
     public Controller(){
+
+    	//Drag n Drop
+    	isDragged = false;
+    	allowDrag = false;
+
     	
     	//Disable workspace
 		view.disableWorkSpace();
@@ -153,7 +166,8 @@ public class Controller {
 				client.setClientIsRunning(false);
 			}
 		});
-    	
+
+
     	view.getColorSliderRed().addChangeListener(new ChangeListener() {
 			
 			public void stateChanged(ChangeEvent e) {
@@ -422,12 +436,30 @@ public class Controller {
 			}
 		});
 
+    	//Enable Drag and Drop
+    	view.getMoveObjectsButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				allowDrag = !allowDrag;
+
+				if(allowDrag == true){
+					view.getMoveObjectsButton().setText("Disable Moving");
+				} else {
+					view.getMoveObjectsButton().setText("Activate Moving");
+				}
+
+			}
+		});
+
     	
     	// MOUSELISTENER
     	paintArea.addMouseListener(new MouseListener() {
 
 			public void mouseReleased(MouseEvent e) {
-
+				if(isDragged == true){
+					followMouse.stop();
+					isDragged = false;
+				}
 			}
 			public void mousePressed(MouseEvent e) {
 
@@ -453,6 +485,18 @@ public class Controller {
                     view.updateWorkSpace(activeForm);
                 }
 
+                // Drag and Drop
+
+				if(allowDrag){
+					if(paintArea.getPaintState() == 0){
+						if(paintArea.getActiveLayer() != -1){
+							isDragged = true;
+							followMouse.start();
+						}
+					}
+				}
+
+
 				//PAINT STATE 1
 				//---
 				//ADD RECTANGLE
@@ -463,6 +507,7 @@ public class Controller {
 
 					paintArea.addRect(e.getX() - dimensions, e.getY() - dimensions);
 					paintArea.repaint();
+
 					// Connect created Object with Observer
 					addLastObserver();
 				}
@@ -475,6 +520,7 @@ public class Controller {
 
 					paintArea.addCircle(e.getX(), e.getY());
 					paintArea.repaint();
+
 					//Connect created Object with observer
 					addLastObserver();
 				}
@@ -493,19 +539,31 @@ public class Controller {
 			}
 
 			public void mouseClicked(MouseEvent e) {
-				//Form follows MouseEvent x/y
-				//followMouse(e);
 
 			}
 
-			public void followMouse(MouseEvent e){
 
-				// TODO: 18.07.2018 LAYERING !!!!!!
-				activeForm.setX(e.getX() - 25); // Jspinner value need to be casted to an Integer
-				activeForm.setY(e.getY() - 25);
-				paintArea.repaint();
-		}
 		});
+
+
+    	//Mouse Dragged TimerEvent
+
+		followMouse = new Timer(10, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if(paintArea.getMousePosition() != null){
+
+					//get mousePosition from paintArea component
+					activeForm.setX((int)(paintArea.getMousePosition().getX())); // Jspinner value need to be casted to an Integer
+					activeForm.setY((int)(paintArea.getMousePosition().getY()));
+					paintArea.repaint();
+				}
+			}
+		});
+
+
+		//
 
 
 
