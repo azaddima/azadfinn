@@ -39,17 +39,13 @@ public class GuiForm extends JFrame implements Observer {
     private JSlider sizeSlider;
     private JSpinner heightSpinner;
     private JSpinner widthSpinner;
-    private JPanel serverPanel;
     private JLabel serverLabel;
     private JLabel portLabel;
     private JLabel serverIpAddressLabel;
     private JLabel serverIpLabel;
-    private JPanel serverButtonPanel;
-    private JPanel clientPanel;
     private JLabel clientLabel;
     private JLabel clientPortLabel;
     private JLabel clientIpAddressLabel;
-    private JPanel clientButtonPanel;
     private JButton circleBtn;
     private JButton serverStopButton;
     private JButton clientStopButton;
@@ -60,6 +56,12 @@ public class GuiForm extends JFrame implements Observer {
     private JCheckBox sinusCheckBox;
     private JCheckBox randomColorCheckBox;
     private JButton deleteBtn;
+    private JPanel streamerPanel;
+    private JPanel streamerCenter;
+    private JPanel streamerButtom;
+    private JPanel viewerPanel;
+    private JPanel viewButtom;
+    private JPanel viewerCenter;
 
     //Canvas
     private PaintArea paintArea = new PaintArea();

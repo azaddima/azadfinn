@@ -249,6 +249,7 @@
                         <constraints border-constraint="North"/>
                         <properties>
                           <font size="16" style="1"/>
+                          <foreground color="-14737633"/>
                           <text value="Dimension"/>
                         </properties>
                       </component>
@@ -347,6 +348,7 @@
                         <constraints border-constraint="North"/>
                         <properties>
                           <font size="16" style="1"/>
+                          <foreground color="-14737633"/>
                           <text value="Animation&#10;"/>
                         </properties>
                       </component>
@@ -417,219 +419,206 @@
                   </vspacer>
                 </children>
               </grid>
-              <grid id="d8482" binding="networkPanel" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="d8482" binding="networkPanel" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <tabbedpane title="Network"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <background color="-857626"/>
+                </properties>
                 <border type="none"/>
                 <children>
-                  <grid id="f50ab" binding="serverPanel" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                  <vspacer id="c591d">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
-                    <properties/>
-                    <border type="none"/>
+                  </vspacer>
+                  <grid id="df8ca" binding="streamerPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-472160"/>
+                    </properties>
+                    <border type="bevel-lowered"/>
                     <children>
                       <component id="27a49" class="javax.swing.JLabel" binding="serverLabel">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
+                        <constraints border-constraint="North"/>
                         <properties>
-                          <font size="14" style="1"/>
+                          <background color="-472160"/>
+                          <font size="16" style="1"/>
+                          <foreground color="-14737633"/>
                           <text value="Streamer"/>
                         </properties>
                       </component>
-                      <hspacer id="9b071">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                      </hspacer>
-                      <component id="13ef5" class="javax.swing.JLabel" binding="portLabel">
-                        <constraints>
-                          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
+                      <grid id="c8cfb" binding="streamerButtom" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints border-constraint="South"/>
                         <properties>
-                          <text value="Port"/>
+                          <background color="-857626"/>
                         </properties>
-                      </component>
-                      <component id="b7adf" class="javax.swing.JLabel" binding="serverIpAddressLabel">
-                        <constraints>
-                          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
+                        <border type="none"/>
+                        <children>
+                          <component id="69932" class="javax.swing.JButton" binding="serverStartButton">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Start server"/>
+                            </properties>
+                          </component>
+                          <component id="cd9c2" class="javax.swing.JButton" binding="serverStopButton">
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <enabled value="false"/>
+                              <text value="Stop server"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                      <grid id="c7549" binding="streamerCenter" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints border-constraint="Center"/>
                         <properties>
-                          <text value="IP Adress"/>
+                          <background color="-857626"/>
                         </properties>
-                      </component>
-                      <component id="4b94a" class="javax.swing.JTextField" binding="serverPortTextField">
-                        <constraints>
-                          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties/>
-                      </component>
-                      <component id="bf240" class="javax.swing.JLabel" binding="serverIpLabel">
-                        <constraints>
-                          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="xxx.xxx.xxx"/>
-                        </properties>
-                      </component>
-                      <vspacer id="fc69e">
-                        <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
-                            <minimum-size width="-1" height="10"/>
-                            <maximum-size width="-1" height="10"/>
-                          </grid>
-                        </constraints>
-                      </vspacer>
-                      <hspacer id="64e7">
-                        <constraints>
-                          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                      </hspacer>
+                        <border type="none"/>
+                        <children>
+                          <component id="13ef5" class="javax.swing.JLabel" binding="portLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Port"/>
+                            </properties>
+                          </component>
+                          <component id="b7adf" class="javax.swing.JLabel" binding="serverIpAddressLabel">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="IP Adress"/>
+                            </properties>
+                          </component>
+                          <component id="bf240" class="javax.swing.JLabel" binding="serverIpLabel">
+                            <constraints>
+                              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="xxx.xxx.xxx"/>
+                            </properties>
+                          </component>
+                          <component id="4b94a" class="javax.swing.JTextField" binding="serverPortTextField">
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                        </children>
+                      </grid>
                     </children>
                   </grid>
-                  <vspacer id="c591d">
+                  <grid id="890d9" binding="viewerPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
                     <constraints>
-                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
-                  </vspacer>
-                  <grid id="a67d5" binding="serverButtonPanel" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
-                    <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <component id="69932" class="javax.swing.JButton" binding="serverStartButton">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Start server"/>
-                        </properties>
-                      </component>
-                      <component id="cd9c2" class="javax.swing.JButton" binding="serverStopButton">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <enabled value="false"/>
-                          <text value="Stop server"/>
-                        </properties>
-                      </component>
-                    </children>
-                  </grid>
-                  <grid id="54462" binding="clientPanel" layout-manager="GridLayoutManager" row-count="5" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
-                    <constraints>
-                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties/>
-                    <border type="none"/>
+                    <properties>
+                      <background color="-472160"/>
+                    </properties>
+                    <border type="bevel-lowered"/>
                     <children>
                       <component id="860e1" class="javax.swing.JLabel" binding="clientLabel">
-                        <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
+                        <constraints border-constraint="North"/>
                         <properties>
-                          <font size="14" style="1"/>
+                          <font size="16" style="1"/>
+                          <foreground color="-14737633"/>
                           <text value="Viewer"/>
                         </properties>
                       </component>
-                      <hspacer id="fd94c">
-                        <constraints>
-                          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                      </hspacer>
-                      <component id="892a4" class="javax.swing.JLabel" binding="clientPortLabel">
-                        <constraints>
-                          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
+                      <grid id="45ba6" binding="viewButtom" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints border-constraint="South"/>
                         <properties>
-                          <text value="Port"/>
+                          <background color="-857626"/>
                         </properties>
-                      </component>
-                      <component id="76784" class="javax.swing.JLabel" binding="clientIpAddressLabel">
-                        <constraints>
-                          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
+                        <border type="none"/>
+                        <children>
+                          <component id="1e200" class="javax.swing.JButton" binding="clientStartButton">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Connect"/>
+                            </properties>
+                          </component>
+                          <component id="fd5fe" class="javax.swing.JButton" binding="clientStopButton">
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <enabled value="false"/>
+                              <text value="Disconnect"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                      <grid id="94f45" binding="viewerCenter" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints border-constraint="Center"/>
                         <properties>
-                          <text value="IP Adress"/>
+                          <background color="-857626"/>
                         </properties>
-                      </component>
-                      <component id="f89b4" class="javax.swing.JTextField" binding="clientPortTextField">
-                        <constraints>
-                          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties/>
-                      </component>
-                      <component id="af7cb" class="javax.swing.JTextField" binding="clientIpAddressTextField">
-                        <constraints>
-                          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties/>
-                      </component>
-                      <vspacer id="fe967">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
-                            <minimum-size width="-1" height="10"/>
-                            <maximum-size width="-1" height="10"/>
-                          </grid>
-                        </constraints>
-                      </vspacer>
-                      <vspacer id="9c005">
-                        <constraints>
-                          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
-                            <minimum-size width="-1" height="10"/>
-                            <maximum-size width="-1" height="10"/>
-                          </grid>
-                        </constraints>
-                      </vspacer>
-                      <hspacer id="6536">
-                        <constraints>
-                          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                      </hspacer>
+                        <border type="none"/>
+                        <children>
+                          <component id="892a4" class="javax.swing.JLabel" binding="clientPortLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Port"/>
+                            </properties>
+                          </component>
+                          <component id="f89b4" class="javax.swing.JTextField" binding="clientPortTextField">
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="76784" class="javax.swing.JLabel" binding="clientIpAddressLabel">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="IP Adress"/>
+                            </properties>
+                          </component>
+                          <component id="af7cb" class="javax.swing.JTextField" binding="clientIpAddressTextField">
+                            <constraints>
+                              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                        </children>
+                      </grid>
                     </children>
                   </grid>
-                  <grid id="8d60a" binding="clientButtonPanel" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                  <vspacer id="ee91">
                     <constraints>
-                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                        <minimum-size width="-1" height="10"/>
+                        <maximum-size width="1" height="50"/>
+                      </grid>
                     </constraints>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <component id="1e200" class="javax.swing.JButton" binding="clientStartButton">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Connect"/>
-                        </properties>
-                      </component>
-                      <component id="fd5fe" class="javax.swing.JButton" binding="clientStopButton">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <enabled value="false"/>
-                          <text value="Disconnect"/>
-                        </properties>
-                      </component>
-                    </children>
-                  </grid>
+                  </vspacer>
                 </children>
               </grid>
             </children>
